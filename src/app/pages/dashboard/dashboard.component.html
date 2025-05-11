@@ -1,0 +1,41 @@
+<header>
+    Task Manager
+</header>
+<main>
+    <section class="summary">
+        <!-- <h3>Summary:</h3> -->
+        <ul class="summary-list">
+            <li><app-badge label="Total" type="neutral" size="large"></app-badge><app-badge [label]="(tasks.length || 0).toString()" type="neutral" size="large"></app-badge></li>
+            <li (click)="naviagteFilter('Completed')" ><app-badge label="Completed" type="success" size="large"></app-badge><app-badge [label]="getTasks('Completed').length.toString()" type="success" size="large"></app-badge></li>
+            <li><app-badge label="Pending" type="warning" size="large"></app-badge><app-badge [label]="getTasks('Pending').length.toString()" type="warning" size="large"></app-badge></li>
+            <li><app-badge label="InProgress" type="info" size="large"></app-badge><app-badge [label]="getTasks('InProgress').length.toString()" type="info" size="large"></app-badge></li>
+        </ul>
+    </section>
+    
+    <section class="controls">
+        <div class="filter-sort">
+            <div class="filter-section">
+                <mat-select id="statusFilter" [(ngModel)]="selectedStatus" (ngModelChange)="onFilterChange()">
+                    @for(status of statuses; track status) {
+                        <mat-option [value]="status">{{ status }}</mat-option>
+                    }
+                </mat-select>
+            </div>
+            <button class="btn" (click)="sortTasks()"><mat-icon>sort</mat-icon>{{'dueDate: ' + (sortNewFirst ? "First" : "Last")}}</button>  
+        </div>
+        <button class="btn" (click)="addTask()">Add Task</button>
+    </section>
+
+    <section class="tasks">
+        @for(task of filteredTasks; track task) {
+            <app-task-card [task]="task" (delete)="onDeleteTask($event)" (edit)="onEditTask($event)"></app-task-card>
+        } @empty {
+            <div class="no-tasks">
+                <mat-icon>task_alt</mat-icon>
+                <p>No tasks available</p>
+            </div>
+        }
+    </section>
+</main>
+
+<app-task-form-modal (task)="processTask($event)"></app-task-form-modal>

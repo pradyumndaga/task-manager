@@ -1,0 +1,41 @@
+<form [formGroup]="formGroup()!" (ngSubmit)="onSubmit()">
+    <fieldset>
+        <label for="title">Title:</label>
+        <input id="title" formControlName="title" type="text" required />
+        @if(formGroup()?.get('title')?.invalid && formGroup()?.get('title')?.touched && formGroup()?.get('title')?.errors?.['required']) {
+            <small class="form-error">Title is required.</small>
+        }
+    </fieldset>
+    <fieldset>
+        <label for="description">Description:</label>
+        <textarea id="description" formControlName="description" required></textarea>
+    </fieldset>
+    <fieldset>
+        <div class="fieldset-horizontal">
+            <div class="fieldset-horizontal-item">
+                <label for="dueDate">Due Date:</label>
+                <input id="dueDate" formControlName="dueDate" type="date" required />
+                @if(formGroup()?.get('dueDate')?.invalid && formGroup()?.get('dueDate')?.touched && formGroup()?.get('dueDate')?.errors?.['required']) {
+                    <small class="form-error">dueDate is required.</small>
+                }
+            </div>
+           
+            <div>
+                <label for="status">Status:</label>
+                    <mat-select formControlName="status" name="status">
+                        <mat-option value="Pending">Pending</mat-option>
+                        <mat-option value="InProgress">In Progress</mat-option>
+                        <mat-option value="Completed">Completed</mat-option>
+                    </mat-select>
+            </div>
+
+        
+        </div>
+        
+    </fieldset>
+    <button type="submit" 
+        [class]=" !formGroup()?.touched || submitDisabled() ? 'disabled' : ''" 
+        [disabled]=" !formGroup()?.touched || submitDisabled()">
+        {{ editMode() ? 'Update Task' : 'Add Task' }}
+    </button>
+</form>

@@ -1,0 +1,41 @@
+div {
+    padding: 0.5rem 1rem;
+    border-radius: 12px;
+}
+
+.success {
+    background-color: #28a745;
+    color: white;
+}
+
+.info {
+    background-color: #17a2b8;
+    color: white;
+}
+
+.warning {
+    background-color: #ffc107;
+    color: white;
+}
+
+.error {
+    background-color: #dc3545;
+    color: white;
+}
+
+.neutral {
+    background-color: #6c757d;
+    color: white;
+}
+
+.small {
+    font-size: 0.75rem;
+}
+
+.medium {
+    font-size: 1rem;
+}
+
+.large {
+    font-size: 1.25rem;
+}

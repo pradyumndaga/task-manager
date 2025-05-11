@@ -1,0 +1,13 @@
+<div class="task-card">
+    @let t = task();
+    <p class="task-card-title">{{ t.title }}</p>
+    <p class="task-card-description" [matTooltip]="t.description">{{ t.description }}</p>
+    <p>Due Date: {{ t.dueDate | date }}</p>
+    <div class="task-card-footer">
+        <app-badge [label]="t.status" [type]="getBadgeType(t.status)" size="small"></app-badge>
+        <div>
+            <button class="icon-btn" matTooltip="edit" (click)="editTask(t)"><mat-icon>edit</mat-icon></button>
+            <button class="icon-btn" matTooltip="delete" (click)="deleteTask(t.id)"><mat-icon>delete</mat-icon></button>
+        </div>
+    </div>
+</div>

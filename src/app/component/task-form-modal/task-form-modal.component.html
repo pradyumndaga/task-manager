@@ -1,0 +1,12 @@
+@if(openModal){
+    <div class="modal-backdrop"></div>
+    <div class="modal">
+    <div class="modal-header">
+        <h2>{{editMode ? "Edit Task": "Add Task"}}</h2>
+        <button class="btn-close" (click)="closeModal()">x</button>
+    </div>
+    <div class="modal-body">
+        <app-task-form [formGroup]="formData" [editMode]="editMode" (submit)="onSubmit()"></app-task-form>
+    </div>
+    <div class="modal-footer"></div>
+</div>}
