@@ -15,7 +15,7 @@ import {
   updateTask,
 } from '../../store/tasks.actions';
 import { MatSelectModule } from '@angular/material/select';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
@@ -25,13 +25,12 @@ import { Router } from '@angular/router';
     TaskCardComponent,
     BadgeComponent,
     TaskFormModalComponent,
-    MatSelectModule
+    MatSelectModule,
   ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss',
 })
 export class DashboardComponent implements OnInit {
-  routeFilter = input<string>();
 
   @ViewChild(TaskFormModalComponent) taskFormModal!: TaskFormModalComponent;
 
@@ -39,8 +38,11 @@ export class DashboardComponent implements OnInit {
   selectedStatus: string = 'All';
   statuses = ['Pending', 'InProgress', 'Completed', 'All'];
   tasks: Task[] = [];
-  constructor(private store: Store<AppState>, private router: Router) {
-    console.log('route filter', this.routeFilter());
+  constructor(
+    private store: Store<AppState>,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {
     this.store.dispatch(fetchAllTasks());
     this.store
       .select((state) => state.tasks)
@@ -52,24 +54,26 @@ export class DashboardComponent implements OnInit {
 
   filteredTasks: any[] = [];
 
-
   ngOnInit(): void {
-    console.log('route filter', this.routeFilter());
-    this.filteredTasks = this.tasks;
-    if (!this.sortNewFirst) {
-      this.filteredTasks = [...this.filteredTasks].reverse()
-    }
+    this.route.queryParams.subscribe((params) => {
+      const status = params['status'];
+      if (status) {
+        this.selectedStatus = status;
+        this.onFilterChange();
+      } else {
+        this.filteredTasks = this.tasks;
+        if (!this.sortNewFirst) {
+          this.filteredTasks = [...this.filteredTasks].reverse();
+        }
+      }
+    });
   }
 
-  naviagteFilter(status: String) {
-    this.router.navigate(['', {queryParams: {status}}]);
+  naviagteFilter(status: string) {
+    this.router.navigate([''], { queryParams: { status } });
   }
 
   getFilteredTasks() {
-    if (this.routeFilter()) {
-      console.log('route filter', this.routeFilter());
-      this.selectedStatus = this.routeFilter()!;
-    }
     this.onFilterChange();
   }
 
@@ -77,15 +81,20 @@ export class DashboardComponent implements OnInit {
     return this.tasks.filter((task) => task.status === status);
   }
 
+  onFilterChangeRoute() {
+    this.router.navigate([''], { queryParams: { status: this.selectedStatus } });
+    this.onFilterChange();
+  }
+
   onFilterChange() {
     if (this.selectedStatus) {
       if (this.selectedStatus === 'All') {
         this.filteredTasks = this.tasks;
         if (!this.sortNewFirst) {
-          this.filteredTasks = [...this.filteredTasks].reverse()
+          this.filteredTasks = [...this.filteredTasks].reverse();
         }
         return;
-      } 
+      }
       this.filteredTasks = this.tasks.filter(
         (task) => task.status === this.selectedStatus
       );
@@ -94,7 +103,7 @@ export class DashboardComponent implements OnInit {
     }
 
     if (!this.sortNewFirst) {
-      this.filteredTasks = [...this.filteredTasks].reverse()
+      this.filteredTasks = [...this.filteredTasks].reverse();
     }
   }
 
@@ -133,7 +142,7 @@ export class DashboardComponent implements OnInit {
   }
 
   sortTasks() {
-    this.sortNewFirst = !this.sortNewFirst
+    this.sortNewFirst = !this.sortNewFirst;
     this.filteredTasks = [...this.filteredTasks].reverse();
   }
 }

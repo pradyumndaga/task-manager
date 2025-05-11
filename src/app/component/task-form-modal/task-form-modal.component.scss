@@ -14,11 +14,11 @@
     transform: translate(-50%, -50%);
     background: #4B5563;
     border-radius: 8px;
-    padding: 1.5rem;
+    padding: 1rem;
     width: 70dvw;
     color: #F9FAFB;
     @media (min-width: 768px) {
-        width: 50dvw;
+        width: 40dvw;
     }
     z-index: 20;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -29,7 +29,11 @@
         margin-bottom: 1rem;
     }
     &-body {
+        width: 90%;
         margin-bottom: 1rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
     &-footer {
         display: flex;
@@ -43,4 +47,5 @@
     border: none;
     font-size: 1.5rem;
     cursor: pointer;
+    color: white;
   }

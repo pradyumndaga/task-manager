@@ -3,19 +3,18 @@
 </header>
 <main>
     <section class="summary">
-        <!-- <h3>Summary:</h3> -->
         <ul class="summary-list">
-            <li><app-badge label="Total" type="neutral" size="large"></app-badge><app-badge [label]="(tasks.length || 0).toString()" type="neutral" size="large"></app-badge></li>
+            <li (click)="naviagteFilter('All')"><app-badge label="Total" type="neutral" size="large"></app-badge><app-badge [label]="(tasks.length || 0).toString()" type="neutral" size="large"></app-badge></li>
             <li (click)="naviagteFilter('Completed')" ><app-badge label="Completed" type="success" size="large"></app-badge><app-badge [label]="getTasks('Completed').length.toString()" type="success" size="large"></app-badge></li>
-            <li><app-badge label="Pending" type="warning" size="large"></app-badge><app-badge [label]="getTasks('Pending').length.toString()" type="warning" size="large"></app-badge></li>
-            <li><app-badge label="InProgress" type="info" size="large"></app-badge><app-badge [label]="getTasks('InProgress').length.toString()" type="info" size="large"></app-badge></li>
+            <li (click)="naviagteFilter('Pending')"><app-badge label="Pending" type="warning" size="large"></app-badge><app-badge [label]="getTasks('Pending').length.toString()" type="warning" size="large"></app-badge></li>
+            <li (click)="naviagteFilter('InProgress')"><app-badge label="InProgress" type="info" size="large"></app-badge><app-badge [label]="getTasks('InProgress').length.toString()" type="info" size="large"></app-badge></li>
         </ul>
     </section>
     
     <section class="controls">
         <div class="filter-sort">
             <div class="filter-section">
-                <mat-select id="statusFilter" [(ngModel)]="selectedStatus" (ngModelChange)="onFilterChange()">
+                <mat-select id="statusFilter" [(ngModel)]="selectedStatus" (ngModelChange)="onFilterChangeRoute()">
                     @for(status of statuses; track status) {
                         <mat-option [value]="status">{{ status }}</mat-option>
                     }
