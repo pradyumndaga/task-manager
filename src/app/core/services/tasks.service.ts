@@ -10,9 +10,7 @@ export class TasksService {
   constructor() {}
 
   getAllTasks() {
-    console.log('Fetching tasks from localStorage');
     const tasks = localStorage.getItem(this.taskLocalStorageKey);
-    console.log('Tasks:', tasks);
     return of(JSON.parse(tasks || '[]'));
   }
 
