@@ -24,7 +24,6 @@ export class TaskFormModalComponent {
   open(options: any) {
     this.openModal = true;
     this.editMode = options.editMode;
-    console.log('open modal', options);
     if (options.editMode && options.task) {
       this.formData.patchValue({
         id: options.task.id,
@@ -43,7 +42,6 @@ export class TaskFormModalComponent {
   }
 
   onSubmit() {
-    console.log('Form submitted1:', this.formData.value);
     const taskValue: Task = {
       id: this.formData.value.id!,
       title: this.formData.value.title!,

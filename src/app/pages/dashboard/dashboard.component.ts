@@ -108,7 +108,6 @@ export class DashboardComponent implements OnInit {
   }
 
   onDeleteTask(taskId: number) {
-    console.log(taskId);
     this.store.dispatch(deleteTask({ taskId }));
   }
   onEditTask(event: Task) {
