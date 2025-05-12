@@ -1,12 +1,12 @@
 import { Component, input, OnInit, output } from '@angular/core';
-import { Form, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms'
-import {MatSelectModule} from '@angular/material/select';;
+import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatSelectModule } from '@angular/material/select';
 import _, { isEqual } from 'lodash';
 @Component({
   selector: 'app-task-form',
   imports: [ReactiveFormsModule, FormsModule, MatSelectModule],
   templateUrl: './task-form.component.html',
-  styleUrl: './task-form.component.scss'
+  styleUrl: './task-form.component.scss',
 })
 export class TaskFormComponent implements OnInit {
   formGroup = input<FormGroup>();
@@ -30,17 +30,12 @@ export class TaskFormComponent implements OnInit {
     if (this.formGroup()?.invalid && this.formGroup()?.touched) {
       return true;
     }
-    return isEqual(
-      this.formGroup()?.value,
-      this.formDeepCopy?.value
-    );
+    return isEqual(this.formGroup()?.value, this.formDeepCopy?.value);
   }
 
   onSubmit() {
-    console.log('Form submitted:', this.formGroup()?.value);
     if (this.formGroup()?.valid) {
       const task = this.formGroup()?.value;
-      console.log('Task submitted:', task);
 
       this.submit.emit();
     } else {

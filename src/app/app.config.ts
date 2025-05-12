@@ -1,5 +1,5 @@
 import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
-import { provideRouter, withComponentInputBinding } from '@angular/router';
+import { provideRouter } from '@angular/router';
 
 import { routes } from './app.routes';
 import { provideStore } from '@ngrx/store';
@@ -12,6 +12,6 @@ export const appConfig: ApplicationConfig = {
     provideStore(appStore),
     provideEffects(appEffects),
     TasksService,
-    provideRouter(routes, withComponentInputBinding()),
+    provideRouter(routes),
   ]
 };

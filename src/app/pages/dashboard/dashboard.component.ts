@@ -1,4 +1,4 @@
-import { Component, input, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { TaskCardComponent } from '../../component/task-card/task-card.component';
@@ -62,9 +62,7 @@ export class DashboardComponent implements OnInit {
         this.onFilterChange();
       } else {
         this.filteredTasks = this.tasks;
-        if (!this.sortNewFirst) {
-          this.filteredTasks = [...this.filteredTasks].reverse();
-        }
+        this.getSortedTasks();
       }
     });
   }
@@ -90,9 +88,7 @@ export class DashboardComponent implements OnInit {
     if (this.selectedStatus) {
       if (this.selectedStatus === 'All') {
         this.filteredTasks = this.tasks;
-        if (!this.sortNewFirst) {
-          this.filteredTasks = [...this.filteredTasks].reverse();
-        }
+        this.getSortedTasks();
         return;
       }
       this.filteredTasks = this.tasks.filter(
@@ -102,6 +98,10 @@ export class DashboardComponent implements OnInit {
       this.filteredTasks = this.tasks;
     }
 
+    this.getSortedTasks();
+  }
+
+  getSortedTasks() {
     if (!this.sortNewFirst) {
       this.filteredTasks = [...this.filteredTasks].reverse();
     }
@@ -125,7 +125,6 @@ export class DashboardComponent implements OnInit {
   }
 
   processTask(formTask: any) {
-    console.log('task');
     if (formTask.edit) {
       this.store.dispatch(
         updateTask({

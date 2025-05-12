@@ -1,7 +1,6 @@
 import { createReducer, on } from '@ngrx/store';
 import * as TasksAction from './tasks.actions';
 import { Task } from '../model';
-// import { AppStore } from "./model"
 
 export interface TaskState {
   tasks: Task[];

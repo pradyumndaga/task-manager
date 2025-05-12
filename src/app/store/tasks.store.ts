@@ -1,5 +1,4 @@
 import { Action, ActionReducer } from "@ngrx/store";
-import { Task } from "../model";
 import { tasksReducer, TaskState } from "./tasks.reducers";
 import { TasksEffects } from "./tasks.effects";
 
