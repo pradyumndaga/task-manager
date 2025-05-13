@@ -60,6 +60,7 @@ export class DashboardComponent implements OnInit {
     this.route.queryParams.subscribe((params) => {
       const status = params['status'];
       if (status) {
+        this.searchText = "";
         this.selectedStatus = status;
         this.onFilterChange();
       } else {
