@@ -20,7 +20,8 @@
                     }
                 </mat-select>
             </div>
-            <button class="btn" (click)="sortTasks()"><mat-icon>sort</mat-icon>{{'dueDate: ' + (sortNewFirst ? "First" : "Last")}}</button>  
+            <button class="btn" (click)="sortTasks()"><mat-icon>sort</mat-icon>{{'dueDate: ' + (sortNewFirst ? "First" : "Last")}}</button>
+            <input type="text" [ngModel]="searchText" (ngModelChange)="onSearch($event)" />  
         </div>
         <button class="btn" (click)="addTask()">Add Task</button>
     </section>

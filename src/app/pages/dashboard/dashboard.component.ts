@@ -17,6 +17,8 @@ import {
 import { MatSelectModule } from '@angular/material/select';
 import { ActivatedRoute, Router } from '@angular/router';
 
+import { filter } from 'rxjs';
+
 @Component({
   selector: 'app-dashboard',
   imports: [
@@ -31,9 +33,9 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrl: './dashboard.component.scss',
 })
 export class DashboardComponent implements OnInit {
-
   @ViewChild(TaskFormModalComponent) taskFormModal!: TaskFormModalComponent;
 
+  searchText = '';
   sortNewFirst = true;
   selectedStatus: string = 'All';
   statuses = ['Pending', 'InProgress', 'Completed', 'All'];
@@ -80,7 +82,9 @@ export class DashboardComponent implements OnInit {
   }
 
   onFilterChangeRoute() {
-    this.router.navigate([''], { queryParams: { status: this.selectedStatus } });
+    this.router.navigate([''], {
+      queryParams: { status: this.selectedStatus },
+    });
     this.onFilterChange();
   }
 
@@ -142,5 +146,28 @@ export class DashboardComponent implements OnInit {
   sortTasks() {
     this.sortNewFirst = !this.sortNewFirst;
     this.filteredTasks = [...this.filteredTasks].reverse();
+  }
+
+  onSearch(text: string) {
+    this.searchText = text;
+    console.log(this.searchText);
+    this.filteredTasks = this.tasks.filter(
+      (task) =>
+        task.title.toLowerCase().includes(text) ||
+        task.description.toLowerCase().includes(text)
+    );
+
+    this.filteredTasks = [...this.filteredTasks].sort((a, b) => {
+      let indexA = a.title.toLowerCase().indexOf(this.searchText);
+      if (indexA === -1) {
+        indexA = a.description.toLowerCase().indexOf(this.searchText);
+      }
+      let indexB = b.title.toLowerCase().indexOf(this.searchText);
+      if (indexB === -1) {
+        indexB = a.description.toLowerCase().indexOf(this.searchText);
+      }
+
+      return indexA === indexB ? 0 : indexA > indexB ? 1 : -1;
+    });
   }
 }
