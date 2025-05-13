@@ -151,6 +151,10 @@ export class DashboardComponent implements OnInit {
 
   onSearch(text: string) {
     this.searchText = text;
+    if (!text) {
+      this.onFilterChange();
+      return;
+    }
     console.log(this.searchText);
     this.filteredTasks = this.filteredTasks.filter(
       (task) =>
