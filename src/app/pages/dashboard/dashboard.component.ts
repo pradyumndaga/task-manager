@@ -151,7 +151,7 @@ export class DashboardComponent implements OnInit {
   onSearch(text: string) {
     this.searchText = text;
     console.log(this.searchText);
-    this.filteredTasks = this.tasks.filter(
+    this.filteredTasks = this.filteredTasks.filter(
       (task) =>
         task.title.toLowerCase().includes(text) ||
         task.description.toLowerCase().includes(text)
